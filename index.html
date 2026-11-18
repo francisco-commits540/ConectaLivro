@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ConectaLivro – Protótipo</title>
+<link rel="stylesheet" href="../CSS/style.css">
+</head>
+<body>
+<header>
+  <h1>ConectaLivro</h1>
+  <div>
+    <button class="btn alt sm" id="dk" aria-pressed="false">Modo escuro</button>
+    <button class="btn alt sm" id="rd" aria-pressed="false">Modo leitura</button>
+  </div>
+</header>
+<main id="main" tabindex="-1">
+
+<section class="v" id="v-login" aria-labelledby="t-login">
+  <h2 id="t-login">Bem-vindo(a)!</h2>
+  <p>Doe ou troque livros com pessoas do seu bairro, de forma gratuita e segura.</p>
+  <form class="card" id="fLogin">
+    <label for="nome">Nome ou apelido</label><input id="nome" required autocomplete="nickname">
+    <label for="email">E-mail</label><input id="email" type="email" required autocomplete="email">
+    <label for="senha">Senha (mín. 6 caracteres)</label><input id="senha" type="password" minlength="6" required autocomplete="new-password">
+    <label for="bairro">Seu bairro</label>
+    <select id="bairro" required><option value="">Selecione</option><option>Centro</option><option>Manaíra</option><option>Bancários</option><option>Mangabeira</option><option>Tambaú</option></select>
+    <label style="font-weight:400;display:flex;gap:8px;align-items:start"><input type="checkbox" id="lgpd" required style="width:auto;margin-top:5px">
+    <span>Aceito o uso do meu e-mail e bairro apenas para o funcionamento do app (LGPD). Seu endereço e telefone nunca são exibidos.</span></label>
+    <p><button class="btn" type="submit">Entrar / Cadastrar</button></p>
+  </form>
+</section>
+
+<section class="v" id="v-vitrine" aria-labelledby="t-vit">
+  <h2 id="t-vit">Vitrine comunitária</h2>
+  <div class="card row">
+    <div><label for="q">Título ou autor</label><input id="q" type="search" placeholder="Buscar…"></div>
+    <div><label for="fm">Modalidade</label><select id="fm"><option value="">Todas</option><option>Doação</option><option>Troca</option></select></div>
+    <div><label for="fb">Bairro</label><select id="fb"><option value="">Todos</option></select></div>
+    <div><label for="fg">Gênero</label><select id="fg"><option value="">Todos</option></select></div>
+  </div>
+  <p class="mu" id="count" aria-live="polite"></p>
+  <div class="grid" id="grid"></div>
+</section>
+
+<section class="v" id="v-detalhe" aria-labelledby="t-det">
+  <button class="btn alt sm" data-go="vitrine">← Voltar</button>
+  <div class="card" id="det" style="margin-top:12px"></div>
+</section>
+
+<section class="v" id="v-cadastrar" aria-labelledby="t-cad">
+  <h2 id="t-cad">Cadastrar novo livro</h2>
+  <form class="card" id="fCad">
+    <div class="row"><div><label for="isbn">ISBN (opcional)</label><input id="isbn" inputmode="numeric" placeholder="Ex.: 9788535914849"></div>
+    <div style="flex:0 0 auto"><button type="button" class="btn alt" id="bIsbn">Buscar por ISBN</button></div></div>
+    <p class="mu">Demonstração: ISBNs de exemplo 9788535914849, 9788525406958 e 9788532530787.</p>
+    <label for="ct">Título</label><input id="ct" required>
+    <label for="ca">Autor</label><input id="ca" required>
+    <label for="cg">Gênero</label><select id="cg"><option>Romance</option><option>Ficção</option><option>Fantasia</option><option>Didático</option><option>Infantil</option></select>
+    <div class="row"><div><label for="cm">Modalidade</label><select id="cm"><option>Doação</option><option>Troca</option></select></div>
+    <div><label for="cc">Conservação</label><select id="cc"><option>Novo</option><option>Bom</option><option>Usado</option></select></div></div>
+    <label for="cf">Foto da capa (leve)</label><input id="cf" type="file" accept="image/*">
+    <p class="mu">Seu bairro é o único dado de localização mostrado.</p>
+    <button class="btn" type="submit">Publicar livro</button>
+  </form>
+</section>
+
+<section class="v" id="v-chat" aria-labelledby="t-chat">
+  <h2 id="t-chat">Chat seguro</h2>
+  <div class="card">
+    <p id="chatInfo" class="mu"></p>
+    <div class="msgs" id="msgs" role="log" aria-live="polite"></div>
+    <form class="row" id="fMsg"><div style="flex:3 1 200px"><label for="msg" class="mu" style="margin:0">Mensagem</label><input id="msg" autocomplete="off" required></div>
+    <div style="flex:0 0 auto"><button class="btn" type="submit">Enviar</button></div></form>
+  </div>
+  <div class="card"><strong>Pontos públicos seguros sugeridos</strong>
+    <p class="mu">Toque para sugerir o local no chat. Nenhum telefone é compartilhado.</p>
+    <div class="chips" id="chips"></div>
+    <p class="mu" style="margin-bottom:0">Algo suspeito? <button class="chip" id="rep">Denunciar</button></p></div>
+</section>
+
+<section class="v" id="v-trocas" aria-labelledby="t-tr">
+  <h2 id="t-tr">Minhas trocas</h2>
+  <div class="tabs" role="group" aria-label="Tipo de pedido">
+    <button class="btn" data-tab="env" aria-pressed="true">Enviados</button>
+    <button class="btn alt" data-tab="rec" aria-pressed="false">Recebidos</button>
+  </div>
+  <div id="lista"></div>
+</section>
+
+</main>
+<nav id="nav" aria-label="Principal" hidden>
+  <button data-go="vitrine">Vitrine</button>
+  <button data-go="cadastrar">Cadastrar</button>
+  <button data-go="chat">Chat</button>
+  <button data-go="trocas">Trocas</button>
+</nav>
+<div id="film" aria-hidden="true"></div>
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script src="../JS/app.js"></script>
+</body>
+</html>
